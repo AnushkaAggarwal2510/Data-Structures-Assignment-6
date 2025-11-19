@@ -1,0 +1,68 @@
+Question 2) Display all the node values in a circular linked list, repeating value of head node at the end too.
+For example: Input: 20 → 100 → 40 → 80 → 60,
+             
+Output: 20 100 40 80 60 20.
+
+Answer 2)
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+class CircularList {
+    Node* head;
+
+public:
+    CircularList() { head = NULL; }
+
+    void insertEnd(int val) {
+        Node* newNode = new Node{val, NULL};
+        if (!head) {
+            head = newNode;
+            newNode->next = head;
+        } else {
+            Node* temp = head;
+            while (temp->next != head)
+                temp = temp->next;
+            temp->next = newNode;
+            newNode->next = head;
+        }
+    }
+    void display() {
+        if (!head) {
+            cout << "List is empty!\n";
+            return;
+        }
+
+        Node* temp = head;
+        do {
+            cout << temp->data << " ";
+            temp = temp->next;
+        } while (temp != head);
+
+        cout << head->data << endl;
+    }
+};
+
+int main() {
+    CircularList cl;
+    int n, val;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Enter value for node " << i + 1 << ": ";
+        cin >> val;
+        cl.insertEnd(val);
+    }
+
+    cout << "\nCircular Linked List (head repeated at end): ";
+    cl.display();
+
+    return 0;
+}
