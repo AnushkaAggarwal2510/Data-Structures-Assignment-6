@@ -1,0 +1,126 @@
+Question 3) Write a program to find size of
+            i. Doubly Linked List.
+            ii. Circular Linked List
+
+Answer 3(i)
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+};
+
+Node* head = NULL;
+
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->prev = temp;
+}
+
+int sizeOfDLL() {
+    int count = 0;
+    Node* temp = head;
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
+int main() {
+    int n, value;
+    cout << "Enter number of nodes (DLL): ";
+    cin >> n;
+
+    cout << "Enter " << n << " values:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        insertAtEnd(value);
+    }
+
+    cout << "Size of Doubly Linked List = " << sizeOfDLL() << endl;
+    return 0;
+}
+
+
+
+Answer 3(ii)
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    if (head == NULL) {
+        head = newNode;
+        newNode->next = head;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != head)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->next = head;
+}
+
+int sizeOfCLL() {
+    if (head == NULL)
+        return 0;
+
+    int count = 1;
+    Node* temp = head->next;
+
+    while (temp != head) {
+        count++;
+        temp = temp->next;
+    }
+
+    return count;
+}
+
+int main() {
+    int n, value;
+    cout << "Enter number of nodes (CLL): ";
+    cin >> n;
+
+    cout << "Enter " << n << " values:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        insertAtEnd(value);
+    }
+
+    cout << "Size of Circular Linked List = " << sizeOfCLL() << endl;
+    return 0;
+}
+
+
+
