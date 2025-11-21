@@ -1,0 +1,71 @@
+Question 5) Write a program to check if a linked list is Circular Linked List or not.
+
+Answer 5)
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+void insertEnd(Node*& head, int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+    Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = newNode;
+}
+int isCircular(Node* head) {
+    if (head == NULL)
+        return 0;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+            return 1;
+    }
+    return 0;
+}
+
+int main() {
+    Node* head = NULL;
+    int n, value;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+    cout << "Enter " << n << " values:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        insertEnd(head, value);
+    }
+    char ch;
+    cout << "Make the list circular? (y/n): ";
+    cin >> ch;
+
+    if (ch == 'y' || ch == 'Y') {
+        Node* temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = head;
+    }
+    if (isCircular(head))
+        cout << "The linked list is CIRCULAR.\n";
+    else
+        cout << "The linked list is NOT circular.\n";
+
+    return 0;
+}
